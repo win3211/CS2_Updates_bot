@@ -134,13 +134,16 @@ def check_for_update() -> None:
 
 def main() -> None:
     print("Bot started. Monitoring Counter-Strike updates...")
+
+    # Якщо запускаємось у GitHub Actions — робимо ОДНУ перевірку і виходимо
+    if os.environ.get("RUN_ONCE") == "1":
+        check_for_update()
+        return
+
+    # Локальний/серверний режим (якщо колись знадобиться)
     while True:
         try:
             check_for_update()
         except Exception as e:
             print("Error in check_for_update():", e)
         time.sleep(CHECK_INTERVAL_SECONDS)
-
-
-if __name__ == "__main__":
-    main()
