@@ -1,25 +1,26 @@
+import os
 import time
 import hashlib
 import requests
 from bs4 import BeautifulSoup
 
 # ================== НАЛАШТУВАННЯ ==================
-BOT_TOKEN = "8261747593:AAF03KjIex3HMRn0hAGAm3yq-t5mkwzE3sQ"   # сюди вставляєш токен бота
-CHAT_ID = -1003604684475                  # сюди вставляєш chat_id групи (ціле число)
+BOT_TOKEN = os.environ["BOT_TOKEN"]
+CHAT_ID = int(os.environ["CHAT_ID"])
 
 EN_URL = "https://www.counter-strike.net/news/updates?l=english"
 UA_URL = "https://www.counter-strike.net/news/updates?l=ukrainian"
 
-CHECK_INTERVAL_SECONDS = 30               # як часто перевіряти оновлення (30 сек – ок)
-STATE_FILE = "last_update_hash.txt"       # файл, де зберігаємо хеш останнього оновлення
+CHECK_INTERVAL_SECONDS = 30
+STATE_FILE = "last_update_hash.txt"
 # ==================================================
 
 
 def send_message(text: str) -> None:
     """Надіслати повідомлення в Telegram-групу."""
-    url = f"https://api.telegram.org/bot{8261747593:AAF03KjIex3HMRn0hAGAm3yq-t5mkwzE3sQ}/sendMessage"
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
     payload = {
-        "chat_id": -1003604684475,
+        "chat_id": CHAT_ID,
         "text": text,
         "parse_mode": "HTML",
         "disable_web_page_preview": True,
