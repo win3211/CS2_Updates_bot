@@ -21,8 +21,15 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Restore last hash cache
+        uses: actions/cache@v4
+        with:
+          path: last_update_hash.txt
+          key: cs2-last-hash-v1
+
       - name: Run bot
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           CHAT_ID: ${{ secrets.CHAT_ID }}
+          RUN_ONCE: "1"
         run: python cs_updates_bot.py
